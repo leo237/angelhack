@@ -11,8 +11,10 @@ import requests
 import random
 import tornado.escape
 import pycps
+import hashlib
 from hashlib import sha512
 import urllib2, urllib, json
+import re
 #---------------------------------------------------------------------------
 
 from tornado.options import define, options, parse_command_line
@@ -39,6 +41,30 @@ class IndexHandler(tornado.web.RequestHandler):
             self.redirect('/home')
         else:
             self.render('index.html')
+class SelectLoginHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render('login.html')
+
+class StudentHandler(tornado.web.RequestHandler):
+    def get(self):
+        if (self.get_secure_cookie('student')):
+            self.redirect('/studenthome')
+        else:
+            self.render('studentlogin.html')
+
+class CollegeHandler(tornado.web.RequestHandler):
+    def get(self):
+        if (self.get_secure_cookie('college')):
+            self.redirect('/collegehome')
+        else:
+            self.render('collegelogin.html')
+
+class CompanyHandler(tornado.web.RequestHandler):
+    def get(self):
+        if (self.get_secure_cookie('company')):
+            self.redirect('companylogin.html')
+        else:
+            self.render('companylogin.html')
 
 #Login Handlers----------------------------------------
 class CollegeLoginHandler(tornado.web.RequestHandler):
@@ -106,14 +132,14 @@ class CompanyLoginHandler(tornado.web.RequestHandler):
             self.redirect('/companyhome')
         else:
             self.redirect('/')
-
-
-
-            
+#------------------------------------------------------------------
+           
 
 class LogoutHandler(tornado.web.RequestHandler):
     def get(self):
-        self.clear_cookie("user")
+        self.clear_cookie("student")
+        self.clear_cookie("company")
+        self.clear_cookie("college")
         self.redirect('/')
 
 
@@ -140,8 +166,16 @@ class WSHandler(tornado.websocket.WebSocketHandler):
         
 handlers = [
     (r'/',IndexHandler),
+    (r'/login',SelectLoginHandler),
+    (r'/college',CollegeHandler),
     (r'/collegelogin',CollegeLoginHandler),
-
+    #(r'/collegehome',CollgeHomeHandler),
+    (r'/student',StudentHandler),
+    (r'/studentlogin',StudentLoginHandler),
+    #(r'/studenthome',StudentHomeHandler),
+    (r'/company',CompanyHandler),
+    (r'/companylogin',CompanyLoginHandler),
+    #(r'/companyhome',CompanyHomeHandler),
     (r'/logout',LogoutHandler)
 
 ]
@@ -154,5 +188,5 @@ if __name__ == "__main__":
     app = tornado.web.Application(handlers, template_path=os.path.join(os.path.dirname(__file__), "templates"),
                                   static_path=os.path.join(os.path.dirname(__file__), "static"), cookie_secret="61oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=", debug=True)
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(8888, address='0.0.0.0')
+    http_server.listen(80, address='0.0.0.0')
     tornado.ioloop.IOLoop.instance().start()
