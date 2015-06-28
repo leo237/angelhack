@@ -1,0 +1,626 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Zeno::Angel hack Chennai 2015</title>
+		<link href="static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link rel="shortcut icon" href="../images/fav.png" />	
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="static/js/jquery.min.js"></script>
+		 <!---- start-smoth-scrolling---->
+		<script type="text/javascript" src="static/js/move-top.js"></script>
+		<script type="text/javascript" src="static/js/easing.js"></script>
+		<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+		</script>
+		 <!-- Custom Theme files -->
+		<link href="static/css/style.css" rel='stylesheet' type='text/css' />
+   		 <!-- Custom Theme files -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		</script>
+		<!----webfonts---->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700' rel='stylesheet' type='text/css'>
+		<!----//webfonts---->
+		<!----start-top-nav-script---->
+		<script>
+			$(function() {
+				var pull 		= $('#pull');
+					menu 		= $('nav ul');
+					menuHeight	= menu.height();
+				$(pull).on('click', function(e) {
+					e.preventDefault();
+					menu.slideToggle();
+				});
+				$(window).resize(function(){
+	        		var w = $(window).width();
+	        		if(w > 320 && menu.is(':hidden')) {
+	        			menu.removeAttr('style');
+	        		}
+	    		});
+			});
+
+			$(document).ready(function(){ 
+    $('#characterLeft').text('140 characters left');
+    $('#message').keydown(function () {
+        var max = 140;
+        var len = $(this).val().length;
+        if (len >= max) {
+            $('#characterLeft').text('You have reached the limit');
+            $('#characterLeft').addClass('red');
+            $('#btnSubmit').addClass('disabled');            
+        } 
+        else {
+            var ch = max - len;
+            $('#characterLeft').text(ch + ' characters left');
+            $('#btnSubmit').removeClass('disabled');
+            $('#characterLeft').removeClass('red');            
+        }
+    });    
+});
+s
+		</script>
+
+		<style type="text/css">
+/* uses font awesome for social icons */
+@import url(http://maxcdn.bootstrapcdn.com/font-awesome/4.2/css/font-awesome.min.css);
+
+.page-header{
+  text-align: center;    
+}
+
+/*social buttons*/
+.btn-social{
+  color: white;
+  opacity:0.9;
+}
+.btn-social:hover {
+  color: white;
+    opacity:1;
+}
+.btn-facebook {
+background-color: #3b5998;
+opacity:0.9;
+}
+.btn-twitter {
+background-color: #00aced;
+opacity:0.9;
+}
+.btn-linkedin {
+background-color:#0e76a8;
+opacity:0.9;
+}
+.btn-github{
+  background-color:#000000;
+  opacity:0.9;
+}
+.btn-google {
+  background-color: #c32f10;
+  opacity: 0.9;
+}
+.btn-stackoverflow{
+  background-color: #D38B28;
+  opacity: 0.9;
+}
+
+/* resume stuff */
+
+.bs-callout {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: #eee;
+    border-image: none;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px 1px 1px 5px;
+    margin-bottom: 5px;
+    padding: 20px;
+}
+.bs-callout:last-child {
+    margin-bottom: 0px;
+}
+.bs-callout h4 {
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+
+.bs-callout-danger {
+    border-left-color: #d9534f;
+}
+
+.bs-callout-danger h4{
+    color: #d9534f;
+}
+
+.resume .list-group-item:first-child, .resume .list-group-item:last-child{
+  border-radius:0;
+}
+
+/*makes an anchor inactive(not clickable)*/
+.inactive-link {
+   pointer-events: none;
+   cursor: default;
+}
+
+.resume-heading .social-btns{
+  margin-top:15px;
+}
+.resume-heading .social-btns i.fa{
+  margin-left:-5px;
+}
+
+
+
+@media (max-width: 992px) {
+  .resume-heading .social-btn-holder{
+    padding:5px;
+  }
+}
+
+
+/* skill meter in resume. copy pasted from http://bootsnipp.com/snippets/featured/progress-bar-meter */
+
+.progress-bar {
+    text-align: left;
+	white-space: nowrap;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+}
+
+.progress-bar > .progress-type {
+	padding-left: 10px;
+}
+
+.progress-meter {
+	min-height: 15px;
+	border-bottom: 2px solid rgb(160, 160, 160);
+  margin-bottom: 15px;
+}
+
+.progress-meter > .meter {
+	position: relative;
+	float: left;
+	min-height: 15px;
+	border-width: 0px;
+	border-style: solid;
+	border-color: rgb(160, 160, 160);
+}
+
+.progress-meter > .meter-left {
+	border-left-width: 2px;
+}
+
+.progress-meter > .meter-right {
+	float: right;
+	border-right-width: 2px;
+}
+
+.progress-meter > .meter-right:last-child {
+	border-left-width: 2px;
+}
+
+.progress-meter > .meter > .meter-text {
+	position: absolute;
+	display: inline-block;
+	bottom: -20px;
+	width: 100%;
+	font-weight: 700;
+	font-size: 0.85em;
+	color: rgb(160, 160, 160);
+	text-align: left;
+}
+
+.progress-meter > .meter.meter-right > .meter-text {
+	text-align: right;
+}
+
+.red{
+    color:red;
+    }
+.form-area
+{
+    background-color: #FAFAFA;
+	padding: 10px 40px 60px;
+	margin: 10px 0px 60px;
+	border: 1px solid GREY;
+	}
+
+
+
+.profile 
+{
+    min-height: 355px;
+    display: inline-block;
+    }
+figcaption.ratings
+{
+    margin-top:20px;
+    }
+figcaption.ratings a
+{
+    color:#f1c40f;
+    font-size:11px;
+    }
+figcaption.ratings a:hover
+{
+    color:#f39c12;
+    text-decoration:none;
+    }
+.divider 
+{
+    border-top:1px solid rgba(0,0,0,0.1);
+    }
+.emphasis 
+{
+    border-top: 4px solid transparent;
+    }
+.emphasis:hover 
+{
+    border-top: 4px solid #1abc9c;
+    }
+.emphasis h2
+{
+    margin-bottom:0;
+    }
+span.tags 
+{
+    background: #1abc9c;
+    border-radius: 2px;
+    color: #f5f5f5;
+    font-weight: bold;
+    padding: 2px 4px;
+    }
+.dropdown-menu 
+{
+    background-color: #34495e;    
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    width: 250px;
+    margin-left: -125px;
+    left: 50%;
+    }
+.dropdown-menu .divider 
+{
+    background:none;    
+    }
+.dropdown-menu>li>a
+{
+    color:#f5f5f5;
+    }
+.dropup .dropdown-menu 
+{
+    margin-bottom:10px;
+    }
+.dropup .dropdown-menu:before 
+{
+    content: "";
+    border-top: 10px solid #34495e;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    margin-left: -10px;
+    z-index: 10;
+    }
+
+
+		</style>
+		
+</head>
+	<body style="margin:30px;">
+
+
+<img src="../images/logo.png">
+<h4><b>Student Dashboard</b></h4>
+<br>
+	<br>
+<div class="container">
+ 
+<div id="content">
+    <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+        <li class="active"><a href="#profile" data-toggle="tab">My Profile</a></li>
+        <li><a href="#project" data-toggle="tab">Add Project</a></li>
+        <li><a href="#research" data-toggle="tab">Add Research</a></li>
+        <li><a href="#status" data-toggle="tab">View Status</a></li>
+        <li><a href="#jobs" data-toggle="tab">Suggested Jobs</a></li>
+        
+    </ul>
+    <div id="my-tab-content" class="tab-content">
+    <div class="tab-pane active" id="profile">
+            <h1>My Profile</h1>
+            <form action="">
+            <input style="position:absolute; right:10px;" type="submit" class="btn btn-primary btn-lg" value="Edit">
+            </form>
+            <div class="container">
+
+
+<div class="resume">
+    <header class="page-header">
+    <small> <i class="fa fa-clock-o"></i> Last Updated on: <time>Sunday, June 28, 2015</time></small>
+  </header>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+    <div class="panel panel-default">
+      <div class="panel-heading resume-heading">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="col-xs-12 col-sm-4">
+              <figure>
+                <img class="img-circle img-responsive" alt="" src="static/images/1.png">
+              </figure>
+              
+              
+              
+            </div>
+
+            <div class="col-xs-12 col-sm-8">
+              <ul class="list-group">
+                <li class="list-group-item">{{ name }}</li>
+                <li class="list-group-item">{{ degree }}</li>
+                <li class="list-group-item">{{ collegename }}</li>
+                <li class="list-group-item"><i class="fa fa-phone"></i>{{ phone }}</li>
+                <li class="list-group-item"><i class="fa fa-envelope"></i>{{ email }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bs-callout bs-callout-danger">
+        <h4>Summary</h4>
+        {{ summary }}
+      </div>
+      
+      <div class="bs-callout bs-callout-danger">
+        <h4>Research Interests</h4>
+        <ul>
+              {% for each in researchAreas %}
+        	    <li class="list-group-item"> {{ each }} </li>
+              {% end %}
+        </ul>
+      </div>
+      <div class="bs-callout bs-callout-danger">
+        <h4>Project Areas</h4>
+        <ul>
+              {% for each in projectAreas %}
+              <li class="list-group-item"> {{ each }} </li>
+              {% end %}
+        </ul>
+      </div>
+
+      <div class="bs-callout bs-callout-danger">
+        <h4>Education</h4>
+        <table class="table table-striped table-responsive ">
+          <thead>
+            <tr><th>Degree</th>
+            <th>Graduation Year</th>
+            <th>CGPA</th>
+          </tr></thead>
+          <tbody>
+            <tr>
+              <td>{{ degree }}</td>
+              <td>{{ graduating }}</td>
+              <td>{{ gpa }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bs-callout bs-callout-danger">
+        <h4>Prior Experiences</h4>
+        <ul class="list-group">
+          {% for each in experience %}
+          <a class="list-group-item inactive-link" href="#">
+            <h4 class="list-group-item-heading">
+              {{ each }}
+            </h4>
+            <p class="list-group-item-text">
+              {{ experience[each] }}
+            </p>
+          </a>
+        </ul>
+        {% end %}
+            <p></p>
+          </a>
+        </ul>
+      </div>
+      <div class="bs-callout bs-callout-danger">
+        <h4>Key Expertise</h4>
+        {% for each in allKeys %}
+        <ul class="list-group">
+          <li class="list-group-item"> {{ each }} </li>
+        </ul>
+        {% end %}
+      </div>
+      
+
+    </div>
+
+  </div>
+</div>
+    
+</div>
+
+</div>
+        </div>
+<!-- VIEW STATUS -->
+      <div class="tab-pane" id="status">
+            <h1> View Status </h1>
+            <div class="bs-callout bs-callout-danger">
+        
+        <h4>View Project Status</h4>
+        <ul class="list-group">
+          {% for each in projects %}
+          <a class="list-group-item inactive-link" href="#">
+            <h4 class="list-group-item-heading">
+              {{ each }}
+            </h4>
+            <p class="list-group-item-text">
+              Approved :{{ projects[each] }}
+            </p>
+          </a>
+        </ul>
+        {% end %}
+            <p></p>
+          </a>
+
+         <h4>View Research Status</h4>
+        <ul class="list-group">
+          {% for each in research %}
+          <a class="list-group-item inactive-link" href="#">
+            <h4 class="list-group-item-heading">
+              {{ each }}
+            </h4>
+            <p class="list-group-item-text">
+              Approved :{{ research[each] }}
+            </p>
+          </a>
+        </ul>
+        {% end %}
+            <p></p>
+          </a> 
+        </ul>
+      </div>
+      </div>
+
+<!-- ------------------------------------------------ -->
+
+        <div class="tab-pane" id="project">
+            <h1>Add Project</h1>
+            <div class="container">
+<div class="col-md-3" >
+</div>
+<div class="col-md-6" >
+    <div class="form-area" >  
+        <form action="/addproject" role="form" method="POST">
+        <br style="clear:both">
+                    <h3 style="margin-bottom: 25px; text-align: center;">ADD PROJECT</h3>
+    				<div class="form-group">
+						<input type="text" class="form-control" id="title" name="title" placeholder="Project title" required>
+					</div>
+                    <div class="form-group">
+                    <textarea name="abstract" class="form-control" type="textarea" id="message" placeholder="Project Abstract" maxlength="140" rows="7"></textarea>
+                        <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
+                    </div>
+            
+        <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">ADD PROJECT</button>
+        </form>
+    </div>
+</div>
+<div class="col-md-3" >
+</div>
+</div>
+        </div>
+        <div class="tab-pane" id="research">
+            <h1>Add Research</h1>
+                        <div class="container">
+<div class="col-md-3" >
+</div>
+<div class="col-md-6" >
+    <div class="form-area" >  
+        <form role="form" action="/addresearch" method="POST">
+        <br style="clear:both">
+                    <h3 style="margin-bottom: 25px; text-align: center;">ADD RESEARCH</h3>
+    				<div class="form-group">
+						<input type="text" class="form-control" id="name" name="title" placeholder="Research title" required>
+					</div>
+                    <div class="form-group">
+                    <textarea name="abstract" class="form-control" type="textarea" id="message" placeholder="Research Abstract" maxlength="140" rows="7"></textarea>
+                        <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>                    
+                    </div>
+            
+        <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">ADD RESEARCH</button>
+        </form>
+    </div>
+</div>
+<div class="col-md-3" >
+</div>
+</div>
+        </div>
+        <div class="tab-pane" id="jobs">
+            <h1>Suggested Jobs</h1>
+            
+
+<br>
+<br>
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="container">
+	<div class="row">
+
+
+<!--JOB-->
+{% for each in jobs %}
+		<div class="col-md-4">
+    	 <div class="well profile">
+            <div class="col-sm-12">
+                <div>
+                    <h2>{{ each['title'] }}</h2>
+                    <p><strong> Company: </strong> {{ each['cname'] }} </p>
+                    <p><strong> Description:</strong> {{ each['description'] }}</p>
+                    <p><strong>Req. Skills: </strong>
+                        {% for tags in each['tag'] %}
+                        <span class="tags">{{ tags }}</span>
+                        {% end %} 
+                        
+                    </p>
+                </div>             
+               
+            </div>            
+            <div class="col-xs-12 divider text-center">
+                <div class="col-xs-12 col-sm-6 emphasis">
+                	<h2><strong>245</strong></h2>                    
+                    <p><small>Followers</small></p>
+                    
+                    <button class="btn btn-success btn-block"><span class="fa fa-plus-circle"></span> Follow </button>
+                </div>
+                <div class="col-xs-12 col-sm-6 emphasis">
+                    <h2><strong> 68 </strong></h2>                    
+                    <p><small>Applicants</small></p>
+                    <button class="btn btn-info btn-block"><span class="fa fa-user"></span> Apply </button>
+                </div>
+               
+            </div>
+    	 </div>                 
+		</div>
+    {% end %}
+<!--JOB ENDS-->
+
+
+
+
+
+	</div>
+</div>
+
+
+
+
+
+        </div>
+        
+    </div>
+</div>
+ 
+ 
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $('#tabs').tab();
+    });
+</script>    
+</div> <!-- container -->
+ 
+ 
+	</body>
+</html>
+

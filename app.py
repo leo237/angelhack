@@ -133,7 +133,104 @@ class CompanyLoginHandler(tornado.web.RequestHandler):
         else:
             self.redirect('/')
 #------------------------------------------------------------------
-           
+
+#Home-handlers----------------------------------------------------
+
+class StudentHomeHandler(tornado.web.RequestHandler):
+    def get(self):
+        studentID = repr(self.get_secure_cookie('student'))
+        studentID = studentID.split("'")
+        studentID = str(studentID[1])
+        if studentID:
+            url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+            headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
+            string = "<regno>"+studentID+"</regno>"
+            values = dict(query=string)
+            r = requests.post(url,data=json.dumps(values), headers=headers)
+            responseDict = json.loads(r.content)
+            if responseDict['documents'] is not None:
+                name = responseDict['documents'][0]['name']['first'] + " " + responseDict['documents'][0]['name']['last']
+                degree = responseDict['documents'][0]['degree']
+                collegename = responseDict['documents'][0]['collegeName']
+                phone = responseDict['documents'][0]['phone']
+                email = responseDict['documents'][0]['email']
+                summary = responseDict['documents'][0]['summary']
+                researchAreas = [ each['t'] for each in responseDict['documents'][0]['tag'] if each['type'] == "research" ]
+                projectAreas = [ each['t'] for each in responseDict['documents'][0]['tag'] if each['type'] == "project" ]
+                gpa = responseDict['documents'][0]['gpa']
+                graduating = responseDict['documents'][0]['graduating']
+                experience = dict()
+                for each in responseDict['documents'][0]['experience']:
+                    experience[each['title']] = each['desc']
+                allKeys = [ each['t'] for each in responseDict['documents'][0]['tag']]
+                projects = dict()
+                for each in responseDict['documents'][0]['project']:
+                    each['title'] = each['verified']
+                research=dict()
+                for each in responseDict['documents'][0]['research']:
+                    research[each['title']] = each['verified']
+                jobs = list()
+                url = "https://api-us.clusterpoint.com/100629/jobs/_search.json"
+                string="*"
+                values = dict(query=string)
+                r = requests.post(url,data=json.dumps(values), headers=headers)
+                alljobs = json.loads(r.content)
+                jobs = alljobs['documents']
+
+                self.render('studenthome.html',name=name,degree=degree,collegename=collegename,phone=phone,email=email,summary=summary,researchAreas=researchAreas, projectAreas=projectAreas,gpa=gpa,graduating=graduating,experience=experience,allKeys=allKeys, projects=projects, research=research,jobs=jobs)
+        else:
+            self.redirect('/')
+
+
+class StudentAddsProjectHandler(tornado.web.RequestHandler):
+    def post(self):
+        studentID = repr(self.get_secure_cookie('student'))
+        studentID = studentID.split("'")
+        studentID = str(studentID[1])
+        if studentID:
+            title = re.escape(self.get_argument("title"))
+            abstract = re.escape(self.get_argument("abstract"))
+            url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+            headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
+            string = "<regno>"+studentID+"</regno>"
+            values = dict(query=string)
+            r = requests.post(url,data=json.dumps(values),headers=headers)
+            responseDict = json.loads(r.content)
+            print responseDict
+            projectCount = len(responseDict['documents'][0]['project'])
+            responseDict['documents'][0]['project'].append({'abstract':abstract, 'title':title})
+            url2update = "https://api-us.clusterpoint.com/100629/student/.json"
+            r = requests.put(url2update,data=json.dumps(responseDict),headers=headers)
+            self.redirect('/studenthome')    
+        else:
+            self.redirect('/')
+ 
+class StudentAddsResearchHandler(tornado.web.RequestHandler):
+    def post(self):
+        studentID = repr(self.get_secure_cookie('student'))
+        studentID = studentID.split("'")
+        studentID = str(studentID[1])
+        if studentID:
+            title = re.escape(self.get_argument("title"))
+            print title
+            abstract = re.escape(self.get_argument("abstract"))
+            print abstract
+            url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+            headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
+            string = "<regno>"+studentID+"</regno>"
+            values = dict(query=string)
+            r = requests.post(url,data=json.dumps(values),headers=headers)
+            responseDict = json.loads(r.content)
+            projectCount = len(responseDict['documents'][0]['research'])
+            mainID = responseDict['documents'][0]['id']
+            proj = responseDict['documents'][0]['project']
+            proj = proj.append({"abstract":abstract, "title":title})
+            payload = {'id':mainID, "project":proj}
+            url2update = "https://api-us.clusterpoint.com/100629/student/_partial_replace.json"
+            r = requests.post(url2update,data=json.dumps(payload),headers=headers)
+            self.redirect('/studenthome')
+
+
 
 class LogoutHandler(tornado.web.RequestHandler):
     def get(self):
@@ -172,7 +269,9 @@ handlers = [
     #(r'/collegehome',CollgeHomeHandler),
     (r'/student',StudentHandler),
     (r'/studentlogin',StudentLoginHandler),
-    #(r'/studenthome',StudentHomeHandler),
+    (r'/studenthome',StudentHomeHandler),
+    (r'/addproject',StudentAddsProjectHandler),
+    (r'/addresearch',StudentAddsResearchHandler),
     (r'/company',CompanyHandler),
     (r'/companylogin',CompanyLoginHandler),
     #(r'/companyhome',CompanyHomeHandler),
