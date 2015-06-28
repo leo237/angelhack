@@ -1,0 +1,688 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Zeno::Angel hack Chennai 2015</title>
+		<link href="static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<link rel="shortcut icon" href="static/images/fav.png" />	
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="static/js/jquery.min.js"></script>
+		 <!---- start-smoth-scrolling---->
+		<script type="text/javascript" src="static/js/move-top.js"></script>
+		<script type="text/javascript" src="static/js/easing.js"></script>
+		<script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){		
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+		</script>
+		 <!-- Custom Theme files -->
+		<link href="static/css/style.css" rel='stylesheet' type='text/css' />
+   		 <!-- Custom Theme files -->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		</script>
+		<!----webfonts---->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800,700' rel='stylesheet' type='text/css'>
+		<!----//webfonts---->
+		<!----start-top-nav-script---->
+		<script>
+			$(function() {
+				var pull 		= $('#pull');
+					menu 		= $('nav ul');
+					menuHeight	= menu.height();
+				$(pull).on('click', function(e) {
+					e.preventDefault();
+					menu.slideToggle();
+				});
+				$(window).resize(function(){
+	        		var w = $(window).width();
+	        		if(w > 320 && menu.is(':hidden')) {
+	        			menu.removeAttr('style');
+	        		}
+	    		});
+			});
+		</script>
+		<style type="text/css">
+@import url(http://fonts.googleapis.com/css?family=Roboto+Condensed:400,700);
+/* written by riliwan balogun http://www.facebook.com/riliwan.rabo*/
+.board{
+    width: 85%;
+margin: 60px auto;
+background: #fff;
+/*box-shadow: 10px 10px #ccc,-10px 20px #ddd;*/
+}
+.board .nav-tabs {
+    position: relative;
+    /* border-bottom: 0; */
+    /* width: 80%; */
+    margin: 40px auto;
+    margin-bottom: 0;
+    box-sizing: border-box;
+
+}
+
+.board > div.board-inner{
+    background: #fafafa url(http://subtlepatterns.com/patterns/geometry2.png);
+    background-size: 30%;
+}
+
+p.narrow{
+    width: 60%;
+    margin: 10px auto;
+}
+
+.liner{
+    height: 2px;
+    background: #ddd;
+    position: absolute;
+    width: 80%;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    z-index: 1;
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #555555;
+    cursor: default;
+    /* background-color: #ffffff; */
+    border: 0;
+    border-bottom-color: transparent;
+}
+
+span.round-tabs{
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    display: inline-block;
+    border-radius: 100px;
+    background: white;
+    z-index: 2;
+    position: absolute;
+    left: 0;
+    text-align: center;
+    font-size: 25px;
+}
+
+span.round-tabs.one{
+    color: rgb(34, 194, 34);border: 2px solid rgb(34, 194, 34);
+}
+
+li.active span.round-tabs.one{
+    background: #fff !important;
+    border: 2px solid #ddd;
+    color: rgb(34, 194, 34);
+}
+
+span.round-tabs.two{
+    color: #febe29;border: 2px solid #febe29;
+}
+
+li.active span.round-tabs.two{
+    background: #fff !important;
+    border: 2px solid #ddd;
+    color: #febe29;
+}
+
+span.round-tabs.three{
+    color: #3e5e9a;border: 2px solid #3e5e9a;
+}
+
+li.active span.round-tabs.three{
+    background: #fff !important;
+    border: 2px solid #ddd;
+    color: #3e5e9a;
+}
+
+span.round-tabs.four{
+    color: #f1685e;border: 2px solid #f1685e;
+}
+
+li.active span.round-tabs.four{
+    background: #fff !important;
+    border: 2px solid #ddd;
+    color: #f1685e;
+}
+
+span.round-tabs.five{
+    color: #999;border: 2px solid #999;
+}
+
+li.active span.round-tabs.five{
+    background: #fff !important;
+    border: 2px solid #ddd;
+    color: #999;
+}
+
+.nav-tabs > li.active > a span.round-tabs{
+    background: #fafafa;
+}
+.nav-tabs > li {
+    width: 20%;
+}
+/*li.active:before {
+    content: " ";
+    position: absolute;
+    left: 45%;
+    opaSocial Score:0;
+    margin: 0 auto;
+    bottom: -2px;
+    border: 10px solid transparent;
+    border-bottom-color: #fff;
+    z-index: 1;
+    transition:0.2s ease-in-out;
+}*/
+li:after {
+    content: " ";
+    position: absolute;
+    left: 45%;
+   opaSocial Score:0;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 5px solid transparent;
+    border-bottom-color: #ddd;
+    transition:0.1s ease-in-out;
+    
+}
+li.active:after {
+    content: " ";
+    position: absolute;
+    left: 45%;
+   opaSocial Score:1;
+    margin: 0 auto;
+    bottom: 0px;
+    border: 10px solid transparent;
+    border-bottom-color: #ddd;
+    
+}
+.nav-tabs > li a{
+   width: 70px;
+   height: 70px;
+   margin: 20px auto;
+   border-radius: 100%;
+   padding: 0;
+}
+
+.nav-tabs > li a:hover{
+    background: transparent;
+}
+
+.tab-content{
+}
+.tab-pane{
+   position: relative;
+padding-top: 10px;
+}
+.tab-content .head{
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 25px;
+    text-transform: uppercase;
+    padding-bottom: 10px;
+}
+.btn-outline-rounded{
+    padding: 10px 40px;
+    margin: 20px 0;
+    border: 2px solid transparent;
+    border-radius: 25px;
+}
+
+.btn.green{
+    background-color:#5cb85c;
+    /*border: 2px solid #5cb85c;*/
+    color: #ffffff;
+}
+
+
+
+@media( max-width : 585px ){
+    
+    .board {
+width: 90%;
+height:auto !important;
+}
+    span.round-tabs {
+        font-size:16px;
+width: 50px;
+height: 50px;
+line-height: 50px;
+    }
+    .tab-content .head{
+        font-size:20px;
+        }
+    .nav-tabs > li a {
+width: 50px;
+height: 50px;
+line-height:50px;
+}
+
+li.active:after {
+content: " ";
+position: absolute;
+left: 35%;
+}
+
+.btn-outline-rounded {
+    padding:12px 20px;
+    }
+}
+
+
+@media only screen and (max-width: 800px) {
+    
+    /* Force table to not be like tables anymore */
+	#no-more-tables table, 
+	#no-more-tables thead, 
+	#no-more-tables tbody, 
+	#no-more-tables th, 
+	#no-more-tables td, 
+	#no-more-tables tr { 
+		display: block; 
+	}
+ 
+	/* Hide table headers (but not display: none;, for accessibility) */
+	#no-more-tables thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+ 
+	#no-more-tables tr { border: 1px solid #ccc; }
+ 
+	#no-more-tables td { 
+		/* Behave  like a "row" */
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+		white-space: normal;
+		text-align:left;
+	}
+ 
+	#no-more-tables td:before { 
+		/* Now like a table header */
+		position: absolute;
+		/* Top/left values mimic padding */
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+		text-align:left;
+		font-weight: bold;
+	}
+ 
+	/*
+	Label the data
+	*/
+	#no-more-tables td:before { content: attr(data-title); }
+}
+		</style>
+
+		<script type="text/javascript">
+$(function(){
+$('a[title]').tooltip();
+});
+
+		</script>
+		<!----//End-top-nav-script---->
+</head>
+	<body style="padding:30px; background:#efefe9;">
+
+	<br>
+	<center>
+		<img src="static/images/logo.png">
+<h4><b>Company Dashboard</b></h4>
+	</center>
+<section style="">
+        <div class="container">
+            <div class="row">
+                <div class="board">
+                    <div class="board-inner">
+                    <ul class="nav nav-tabs" id="myTab">
+                    <div class="liner"></div>
+                     <li class="active">
+                     <a href="#home" data-toggle="tab" title="Job Applicants">
+                      <span class="round-tabs one">
+                              <i class="glyphicon glyphicon-list-alt"></i>
+                      </span> 
+                  </a></li>
+
+                  <li><a href="#profile" data-toggle="tab" title="Filtered Applicants">
+                     <span class="round-tabs two">
+                         <i class="glyphicon glyphicon-filter"></i>
+                     </span> 
+           </a>
+                 </li>
+                 <li><a href="#messages" data-toggle="tab" title="Selected Applicants">
+                     <span class="round-tabs three">
+                          <i class="glyphicon glyphicon-briefcase"></i>
+                     </span> </a>
+                     </li>
+
+                     <li><a href="#settings" data-toggle="tab" title="Post a Job">
+                         <span class="round-tabs four">
+                              <i class="glyphicon glyphicon-plus"></i>
+                         </span> 
+                     </a></li>
+
+                     <li><a href="#doner" data-toggle="tab" title="Manage">
+                         <span class="round-tabs five">
+                              <i class="glyphicon glyphicon-wrench"></i>
+                         </span> </a>
+                     </li>
+                     
+                     </ul></div>
+
+                     <div class="tab-content">
+                      <div class="tab-pane fade in active" id="home">
+                          <h3 class="head text-center">Job Applicants</h3>
+<!-- Job card Begins-->                          
+
+    <div class="row" >
+        <div style="margin:20px;">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf">
+        		<thead class="cf">
+        			<tr>
+        				<th>ID</th>
+        				<th>Name</th>
+        				<th class="numeric">Score</th>
+        				<th class="numeric">College</th>
+        				<th class="numeric">Social Score</th>
+        				<th class="numeric">Select</th>
+        				<th class="numeric">Dismiss</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td data-title="ID">1</td>
+        				<td data-title="Name">Abhilash</td>
+        				<td data-title="Score" class="numeric">9.5</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">2</td>
+        				<td data-title="Name">Pnigarhi</td>
+        				<td data-title="Score" class="numeric">7.8</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">3</td>
+        				<td data-title="Name">Sachin</td>
+        				<td data-title="Score" class="numeric">7.6</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">4</td>
+        				<td data-title="Name">Soahil</td>
+        				<td data-title="Score" class="numeric">6.8</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
+    </div>
+<!--Job card ends-->
+                      </div>
+
+
+                      <div class="tab-pane fade" id="profile">
+                            <h3 class="head text-center">Filtered Applicants</h3>
+                          
+ <div class="row" >
+        <div style="margin:20px;">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf">
+        		<thead class="cf">
+        			<tr>
+        				<th>ID</th>
+        				<th>Name</th>
+        				<th class="numeric">Score</th>
+        				<th class="numeric">College</th>
+        				<th class="numeric">Social Score</th>
+        				<th class="numeric">Select</th>
+        				<th class="numeric">Dismiss</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td data-title="ID">1</td>
+        				<td data-title="Name">Abhilash</td>
+        				<td data-title="Score" class="numeric">9.5</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">2</td>
+        				<td data-title="Name">Pnigarhi</td>
+        				<td data-title="Score" class="numeric">7.8</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">3</td>
+        				<td data-title="Name">Sachin</td>
+        				<td data-title="Score" class="numeric">7.6</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">4</td>
+        				<td data-title="Name">Soahil</td>
+        				<td data-title="Score" class="numeric">6.8</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
+    </div>
+
+                      </div>
+                      <div class="tab-pane fade" id="messages">
+                           <h3 class="head text-center">Selected Applicants</h3>
+
+ <div class="row" >
+        <div style="margin:20px;">
+            <table class="col-md-12 table-bordered table-striped table-condensed cf">
+        		<thead class="cf">
+        			<tr>
+        				<th>ID</th>
+        				<th>Name</th>
+        				<th class="numeric">Score</th>
+        				<th class="numeric">College</th>
+        				<th class="numeric">Social Score</th>
+        				<th class="numeric">Select</th>
+        				<th class="numeric">Dismiss</th>
+        			</tr>
+        		</thead>
+        		<tbody>
+        			<tr>
+        				<td data-title="ID">1</td>
+        				<td data-title="Name">Abhilash</td>
+        				<td data-title="Score" class="numeric">9.5</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">2</td>
+        				<td data-title="Name">Pnigarhi</td>
+        				<td data-title="Score" class="numeric">7.8</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">3</td>
+        				<td data-title="Name">Sachin</td>
+        				<td data-title="Score" class="numeric">7.6</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+
+        			<tr>
+        				<td data-title="ID">4</td>
+        				<td data-title="Name">Soahil</td>
+        				<td data-title="Score" class="numeric">6.8</td>
+        				<td data-title="College">VIT University</td>
+        				<td data-title="Social Score">{{ score }}</td>
+        				<td data-title="Select"> <input type="submit" class="btn btn-ok btn-sm" value="Select"></td>
+        				<td data-title="Dismiss" class="numeric"> <input type="submit" class="btn btn-danger btn-sm" value="Dismiss"></td>
+        			</tr>
+        		</tbody>
+        	</table>
+        </div>
+    </div>
+
+                      </div>
+                      <div class="tab-pane fade" id="settings">
+                            <h3 class="head text-center">Post a Job</h3>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-6">
+    	<form action="">
+			<div class="form-group multiple-form-group" data-max=3>
+				<label>Job Title</label>
+
+				<div class="form-group input-group">
+					<input type="text" name="job_title" class="form-control">
+				</div>
+			</div>
+			<div class="form-group multiple-form-group">
+				<label>Required Skill Set</label>
+
+				<div class="form-group input-group">
+					<select name="multiple[]" class="form-control">
+						<option value="">Android</option>
+						<option value="">iOS</option>
+						<option value="">Big Data</option>
+						<option value="">Machine learning</option>
+						<option value="">Artificial Intelligence</option>
+						<option value="">Java</option>
+						<option value="">.NET</option>
+						<option value="">C++</option>
+						<option value="">C#</option>
+						<option value="">Python</option>
+					</select>
+						<span class="input-group-btn"><button type="button" class="btn btn-default btn-add">+
+						</button></span>
+				</div>
+			</div>
+			<div class="form-group multiple-form-group">
+				<label>Job Description</label>
+
+				<div class="form-group input-group">
+					<textarea name="description" class="form-control" rows="3"></textarea>
+
+				</div>
+			</div>
+			 <input type="submit" class="btn btn-primary btn-lg" value="Submit">
+		</form>
+    	</div>        
+	</div>
+</div>
+
+                      </div>
+                      <div class="tab-pane fade" id="doner">
+  
+                      	  <h3 class="head text-center">Manage Jobs</h3>	
+
+
+						</div>
+<div class="clearfix"></div>
+</div>
+
+</div>
+</div>
+</div>
+</section>
+
+<script type="text/javascript">
+	
+	(function ($) {
+    $(function () {
+
+        var addFormGroup = function (event) {
+            event.preventDefault();
+
+            var $formGroup = $(this).closest('.form-group');
+            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+            var $formGroupClone = $formGroup.clone();
+
+            $(this)
+                .toggleClass('btn-default btn-add btn-danger btn-remove')
+                .html('-');
+
+            $formGroupClone.find('input').val('');
+            $formGroupClone.insertAfter($formGroup);
+
+            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            if ($multipleFormGroup.data('max') <= countFormGroup($multipleFormGroup)) {
+                $lastFormGroupLast.find('.btn-add').attr('disabled', true);
+            }
+        };
+
+        var removeFormGroup = function (event) {
+            event.preventDefault();
+
+            var $formGroup = $(this).closest('.form-group');
+            var $multipleFormGroup = $formGroup.closest('.multiple-form-group');
+
+            var $lastFormGroupLast = $multipleFormGroup.find('.form-group:last');
+            if ($multipleFormGroup.data('max') >= countFormGroup($multipleFormGroup)) {
+                $lastFormGroupLast.find('.btn-add').attr('disabled', false);
+            }
+
+            $formGroup.remove();
+        };
+
+        var countFormGroup = function ($form) {
+            return $form.find('.form-group').length;
+        };
+
+        $(document).on('click', '.btn-add', addFormGroup);
+        $(document).on('click', '.btn-remove', removeFormGroup);
+
+    });
+})(jQuery);
+</script>
+	</body>
+</html>
+

@@ -15,6 +15,8 @@ import hashlib
 from hashlib import sha512
 import urllib2, urllib, json
 import re
+# from __future__ import print_function
+from alchemyapi import AlchemyAPI
 #---------------------------------------------------------------------------
 
 from tornado.options import define, options, parse_command_line
@@ -22,6 +24,16 @@ from tornado.options import define, options, parse_command_line
 
 
 #---------------------------------------------------------------------------
+#IBM Bluemix alchemy API
+
+#alchemyapi = AlchemyAPI()
+#response = alchemyapi.keywords('text', demo_text, {'sentiment': 1})
+# for each in response['keywords']:
+#     try:
+#         print(each['relevance'])
+#     except:
+#         pass
+
 
 #clusterpoint APIS
 
@@ -98,7 +110,7 @@ class StudentLoginHandler(tornado.web.RequestHandler):
         m.update(rawPassword)
         password = m.hexdigest()
         #We have username and password. Now verify using clusterpoint
-        url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+        url = "https://api-us.clusterpoint.com/100629/stud/_search.json"
         headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
         string = "<regno>"+username+"</regno><pwd>"+password+"</pwd>"
         values = dict(query=string)
@@ -142,7 +154,7 @@ class StudentHomeHandler(tornado.web.RequestHandler):
         studentID = studentID.split("'")
         studentID = str(studentID[1])
         if studentID:
-            url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+            url = "https://api-us.clusterpoint.com/100629/stud/_search.json"
             headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
             string = "<regno>"+studentID+"</regno>"
             values = dict(query=string)
@@ -178,6 +190,8 @@ class StudentHomeHandler(tornado.web.RequestHandler):
                 jobs = alljobs['documents']
 
                 self.render('studenthome.html',name=name,degree=degree,collegename=collegename,phone=phone,email=email,summary=summary,researchAreas=researchAreas, projectAreas=projectAreas,gpa=gpa,graduating=graduating,experience=experience,allKeys=allKeys, projects=projects, research=research,jobs=jobs)
+            else:
+                redirect('/')
         else:
             self.redirect('/')
 
@@ -190,7 +204,7 @@ class StudentAddsProjectHandler(tornado.web.RequestHandler):
         if studentID:
             title = re.escape(self.get_argument("title"))
             abstract = re.escape(self.get_argument("abstract"))
-            url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+            url = "https://api-us.clusterpoint.com/100629/stud/_search.json"
             headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
             string = "<regno>"+studentID+"</regno>"
             values = dict(query=string)
@@ -199,7 +213,7 @@ class StudentAddsProjectHandler(tornado.web.RequestHandler):
             print responseDict
             projectCount = len(responseDict['documents'][0]['project'])
             responseDict['documents'][0]['project'].append({'abstract':abstract, 'title':title})
-            url2update = "https://api-us.clusterpoint.com/100629/student/.json"
+            url2update = "https://api-us.clusterpoint.com/100629/stud/_partial_replace.json"
             r = requests.put(url2update,data=json.dumps(responseDict),headers=headers)
             self.redirect('/studenthome')    
         else:
@@ -215,7 +229,7 @@ class StudentAddsResearchHandler(tornado.web.RequestHandler):
             print title
             abstract = re.escape(self.get_argument("abstract"))
             print abstract
-            url = "https://api-us.clusterpoint.com/100629/student/_search.json"
+            url = "https://api-us.clusterpoint.com/100629/stud/_search.json"
             headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
             string = "<regno>"+studentID+"</regno>"
             values = dict(query=string)
@@ -223,11 +237,12 @@ class StudentAddsResearchHandler(tornado.web.RequestHandler):
             responseDict = json.loads(r.content)
             projectCount = len(responseDict['documents'][0]['research'])
             mainID = responseDict['documents'][0]['id']
-            proj = responseDict['documents'][0]['project']
-            proj = proj.append({"abstract":abstract, "title":title})
-            payload = {'id':mainID, "project":proj}
-            url2update = "https://api-us.clusterpoint.com/100629/student/_partial_replace.json"
-            r = requests.post(url2update,data=json.dumps(payload),headers=headers)
+            
+            research = responseDict['documents'][0]['research']
+            
+            research.append({"abstract":abstract, "title":title, "verified":"no"})
+            payload = {'id':mainID, "research":research}
+            url2update = "https://api-us.clusterpoint.com/100629/stud/_partial_replace.json"
             self.redirect('/studenthome')
 
 
@@ -238,6 +253,79 @@ class LogoutHandler(tornado.web.RequestHandler):
         self.clear_cookie("company")
         self.clear_cookie("college")
         self.redirect('/')
+
+class CompanyHomeHandler(tornado.web.RequestHandler):
+    def get(self):
+        company = repr(self.get_secure_cookie('company'))
+        company = company.split("'")
+        company = str(company[1])
+        if company:
+            url = "https://api-us.clusterpoint.com/100629/company/_search.json"
+            headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
+            string = "<regno>"+company+"</regno>"
+            values = dict(query=string)
+            #r = requests.post(url,data=json.dumps(values), headers=headers)
+            #responseDict = json.loads(r.content)
+            twitterAct = "leo_cmu"
+            url = "http://api.klout.com/v2/identity.json/twitter?screenName="+twitterAct+"&key=9h7k8hjkg8vkqb29656c9pmr"
+            r = requests.get(url)
+            response = json.loads(r.content)
+            myid = response['id']
+            url2 = "http://api.klout.com/v2/user.json/"+ str(myid)  +"?key=9h7k8hjkg8vkqb29656c9pmr"
+            s = requests.get(url2)
+            ans = json.loads(s.content)
+            score = ans['score']['score']
+            self.render('companyhome.html', score=score)
+
+class CollgeHomeHandler(tornado.web.RequestHandler):
+    def get(self):
+        college = repr(self.get_secure_cookie('college'))
+        college = college.split("'")
+        college = str(college[1])
+        if college:
+            url = "https://api-us.clusterpoint.com/100629/stud/_search.json"
+            headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
+            
+            string = "<project><verified>no</verified></project>"
+            values = dict(query=string)
+            r = requests.post(url,data=json.dumps(values), headers=headers)
+            responseDict = json.loads(r.content)
+            title = list()
+            abstract = list()
+            studentID = responseDict['documents'][0]['id']
+            for each in responseDict['documents'][0]['project']:
+                if each['verified']=="no":
+                    title.append(each['title'])
+                    abstract.append(each['abstract'])
+            self.render('collegehome.html', title=title, abstract=abstract, studentID=studentID)
+
+class ReviewHandler(tornado.web.RequestHandler):
+    def post(self):
+        sid = self.get_argument('sid')
+        abstract = self.get_argument('abstract')
+        print abstract
+        url = "https://api-us.clusterpoint.com/100629/stud/_search.json"
+        headers = {"Authorization":"Basic bGVvcGFuaWdyYWhpQGdtYWlsLmNvbToyM2xlbzIz"}
+        string = "<project><abstract>"+ abstract +"</abstract></project>"
+        values = dict(query=string)
+        r = requests.post(url,data=json.dumps(values), headers=headers)
+        responseDict = json.loads(r.content)
+        for each in responseDict['documents'][0]['project']:
+            if each['abstract'] == abstract:
+                mytext = each['abstract']
+                alchemyapi = AlchemyAPI()
+                response = alchemyapi.keywords('text', abstract, {'sentiment': 1})
+                finalKeys = list()
+                for each in response['keywords']:
+                    try:
+                        if float(each['relevance'])>0.5:
+                            finalKeys.append(each['text'])
+                            print finalKeys
+                            self.render("tags.html", finalKeys=finalKeys)
+                    except:
+                        pass
+
+
 
 
 
@@ -266,15 +354,16 @@ handlers = [
     (r'/login',SelectLoginHandler),
     (r'/college',CollegeHandler),
     (r'/collegelogin',CollegeLoginHandler),
-    #(r'/collegehome',CollgeHomeHandler),
+    (r'/collegehome',CollgeHomeHandler),
     (r'/student',StudentHandler),
     (r'/studentlogin',StudentLoginHandler),
     (r'/studenthome',StudentHomeHandler),
     (r'/addproject',StudentAddsProjectHandler),
     (r'/addresearch',StudentAddsResearchHandler),
     (r'/company',CompanyHandler),
+    (r'/review',ReviewHandler),
     (r'/companylogin',CompanyLoginHandler),
-    #(r'/companyhome',CompanyHomeHandler),
+    (r'/companyhome',CompanyHomeHandler),
     (r'/logout',LogoutHandler)
 
 ]
@@ -287,5 +376,5 @@ if __name__ == "__main__":
     app = tornado.web.Application(handlers, template_path=os.path.join(os.path.dirname(__file__), "templates"),
                                   static_path=os.path.join(os.path.dirname(__file__), "static"), cookie_secret="61oETzKXQAGaYdkL5gEmGeJJFuYh7EQnp2XdTP1o/Vo=", debug=True)
     http_server = tornado.httpserver.HTTPServer(app)
-    http_server.listen(80, address='0.0.0.0')
+    http_server.listen(8888, address='0.0.0.0')
     tornado.ioloop.IOLoop.instance().start()
